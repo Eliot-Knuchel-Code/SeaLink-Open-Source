@@ -1,0 +1,29 @@
+[
+  {
+    "model": "Skiff 200",
+    "id": "skiff_200",
+    "price": 100,
+    "speed": 20,
+    "reliability": 90,
+    "capacity": 10,
+    "description": "Petit bateau rapide, idéal pour missions courtes."
+  },
+  {
+    "model": "Cutter 500",
+    "id": "cutter_500",
+    "price": 500,
+    "speed": 15,
+    "reliability": 95,
+    "capacity": 40,
+    "description": "Bateau polyvalent pour missions commerciales."
+  },
+  {
+    "model": "Bulk Carrier X",
+    "id": "bulk_x",
+    "price": 2000,
+    "speed": 10,
+    "reliability": 85,
+    "capacity": 200,
+    "description": "Cargo lourd — grosses récompenses mais risque modéré."
+  }
+]
