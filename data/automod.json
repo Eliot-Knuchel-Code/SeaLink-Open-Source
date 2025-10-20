@@ -1,0 +1,6 @@
+{
+  "spamLimit": 10,
+  "timeLimit": 10000,
+  "maxWarnings": 3,
+  "bannedWords": []
+}

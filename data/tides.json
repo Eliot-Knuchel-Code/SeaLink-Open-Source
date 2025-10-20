@@ -1,0 +1,57 @@
+{
+  "Shanghai": [
+    { "time": "01:12", "type": "Haute", "height": 4.5 },
+    { "time": "07:30", "type": "Basse", "height": 0.8 },
+    { "time": "13:45", "type": "Haute", "height": 4.4 },
+    { "time": "19:50", "type": "Basse", "height": 0.9 }
+  ],
+  "Singapour": [
+    { "time": "02:05", "type": "Haute", "height": 3.6 },
+    { "time": "08:20", "type": "Basse", "height": 0.5 },
+    { "time": "14:30", "type": "Haute", "height": 3.5 },
+    { "time": "20:40", "type": "Basse", "height": 0.6 }
+  ],
+  "Rotterdam": [
+    { "time": "00:45", "type": "Haute", "height": 5.1 },
+    { "time": "06:55", "type": "Basse", "height": 0.6 },
+    { "time": "13:10", "type": "Haute", "height": 5.0 },
+    { "time": "19:20", "type": "Basse", "height": 0.7 }
+  ],
+  "Los Angeles": [
+    { "time": "01:50", "type": "Haute", "height": 2.8 },
+    { "time": "07:55", "type": "Basse", "height": 0.4 },
+    { "time": "14:00", "type": "Haute", "height": 2.7 },
+    { "time": "20:05", "type": "Basse", "height": 0.5 }
+  ],
+  "Hambourg": [
+    { "time": "00:30", "type": "Haute", "height": 4.9 },
+    { "time": "06:40", "type": "Basse", "height": 0.7 },
+    { "time": "12:50", "type": "Haute", "height": 4.8 },
+    { "time": "19:00", "type": "Basse", "height": 0.8 }
+  ],
+  "Antwerpen": [
+    { "time": "01:15", "type": "Haute", "height": 4.7 },
+    { "time": "07:20", "type": "Basse", "height": 0.6 },
+    { "time": "13:30", "type": "Haute", "height": 4.6 },
+    { "time": "19:35", "type": "Basse", "height": 0.7 }
+  ],
+  "Marseille": [
+    { "time": "02:00", "type": "Haute", "height": 3.5 },
+    { "time": "08:10", "type": "Basse", "height": 0.5 },
+    { "time": "14:20", "type": "Haute", "height": 3.4 },
+    { "time": "20:30", "type": "Basse", "height": 0.6 }
+  ],
+  "Brest": [
+    { "time": "01:10", "type": "Haute", "height": 5.2 },
+    { "time": "07:20", "type": "Basse", "height": 0.5 },
+    { "time": "13:30", "type": "Haute", "height": 5.1 },
+    { "time": "19:40", "type": "Basse", "height": 0.6 }
+  ],
+  "Le Havre": [
+    { "time": "00:50", "type": "Haute", "height": 4.8 },
+    { "time": "06:55", "type": "Basse", "height": 0.7 },
+    { "time": "13:05", "type": "Haute", "height": 4.7 },
+    { "time": "19:10", "type": "Basse", "height": 0.8 }
+  ]
+
+}
