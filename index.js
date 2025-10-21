@@ -35,8 +35,9 @@ const dmLogChannelId = process.env.DM_LOG_CHANNEL_ID;
 const dmMap = new Map();
 
 // Ready event
+
 client.on('ready', () => {
-    console.log(`${client.user.tag} en ligne !`);
+    console.log(`${client.user.tag} is online!`);
 
     // Statut rich presence qui change toutes les 30 sec
     const statuses = [

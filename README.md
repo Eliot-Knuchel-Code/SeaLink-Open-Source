@@ -1,65 +1,77 @@
-# 🌊 SeaLink ⚓ - Bot Discord Maritime Multi-Fonctions
 
-SeaLink est un **bot Discord ultra-complet pour les passionnés de mer et de gestion nautique**. Il combine **coordination maritime**, **économie intégrée**, **automod intelligent**, et **système de tickets** pour rendre la gestion d’un serveur aussi fluide qu’une navigation parfaite.  
+# 🌊 SeaLink ⚓ - Discord Maritime Multi-Function Bot
 
----
-
-## 🚀 Fonctionnalités principales
-
-✨ **Gestion Maritime**  
-- Suivi et coordination des navires et opérations nautiques.  
-
-💰 **Économie intégrée**  
-- Système d’économie maritime avec gestion des ressources et transactions entre utilisateurs.  
-
-🛡️ **Automod puissant**  
-- Modération automatique pour maintenir un serveur clean et safe.  
-
-🎫 **Tickets & Support**  
-- Crée et gère facilement des tickets pour les requêtes ou incidents.  
-
-⚡ **Multi-tâches**  
-- Exécution fluide de multiples fonctions sans ralentir le serveur.  
-
-🔔 **Notifications & alertes**  
-- Reste informé des événements importants et mises à jour.  
+SeaLink is an **all-in-one Discord bot for maritime enthusiasts and nautical management**. It combines **maritime coordination**, **integrated economy**, **intelligent automod**, and a **ticket system** to make server management as smooth as perfect navigation.
 
 ---
 
-## 💻 Modification des fichiers**
+## 🚀 Main Features
 
-- Modifie le fichier .env avec tes clé api et Token 
+### ✨ Maritime Management
+- Track and coordinate ships and nautical operations with ease.
+
+### 💰 Integrated Economy
+- Maritime economy system with resource management and user-to-user transactions.
+
+### 🛡️ Powerful Automod
+- Automatic moderation to keep your server clean and safe.
+
+### 🎫 Tickets & Support
+- Easily create and manage tickets for requests or incidents.
+
+### ⚡ Multi-Tasking
+- Smooth execution of multiple functions without slowing down your server.
+
+### 🔔 Notifications & Alerts
+- Stay informed about important events and updates.
 
 ---
 
-## 💻 Instalation rapide**
+## 💻 File Setup
 
-- Installe les dépendances : 
-npm install
+- Edit the `.env` file with your API keys and Discord Bot Token.
 
-- Charge les commandes : 
-node deploy-commands.js
+---
 
-- Lance le BOT : 
-node index.js
+## 💻 Quick Installation
 
-## 📢 Support & Communauté**
+1. **Install dependencies:**
+	```bash
+	npm install
+	```
+2. **Load commands:**
+	```bash
+	node deploy-commands.js
+	```
+3. **Start the bot:**
+	```bash
+	node index.js
+	```
 
-- 💬 Besoin d’aide ou de support ? Rejoins notre serveur : https://discord.gg/8ykGdj67Da
+---
 
-## 🔒 Permissions nécessaires**
+## 📢 Support & Community
 
-SeaLink requiert les permissions suivantes pour fonctionner correctement :
+- 💬 Need help or support? Join our server: [Discord Support](https://discord.gg/8ykGdj67Da)
 
-- 🛠️ Administrateur ou permissions équivalentes pour gérer rôles et salons.
+---
 
-- ✉️ Lecture/Écriture dans les salons de messages et tickets.
+## 🔒 Required Permissions
 
-- 🛡️ Gestion des messages pour l’Automod.
+SeaLink requires the following permissions to function properly:
 
-## 📄 License**
+- 🛠️ Administrator or equivalent permissions to manage roles and channels.
+- ✉️ Read/Write access in message and ticket channels.
+- 🛡️ Message management for Automod.
 
-SeaLink est open-source et libre d’utilisation. Merci de ne pas republier ou vendre le bot sans autorisation.
+---
 
-## ⭐ Contribuer**
-Envie de participer au projet ? Fork le repo, propose tes idées, et aide la communauté maritime Discord à grandir !
+## 📄 License
+
+SeaLink is open-source and free to use. Please do not republish or sell the bot without permission.
+
+---
+
+## ⭐ Contribute
+
+Want to contribute? Fork the repo, share your ideas, and help grow the Discord maritime community!

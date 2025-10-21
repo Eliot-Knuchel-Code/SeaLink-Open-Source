@@ -18,7 +18,7 @@ module.exports = {
         const ws = new WebSocket(`wss://api.aisstream.io/vessels?token=${process.env.AISSTREAM_KEY}`);
 
         ws.on('open', () => {
-            console.log('Connecté à AISStream');
+            console.log('Connected to AISStream');
         });
 
         ws.on('message', async (data) => {

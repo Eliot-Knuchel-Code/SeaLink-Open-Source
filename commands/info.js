@@ -11,20 +11,39 @@ module.exports = {
       const CLIENT_ID = interaction.client.user.id;
       const INVITE_LINK = `https://discord.com/oauth2/authorize?client_id=1429402183568330837&permissions=4292493394836983&integration_type=0&scope=bot+applications.commands`;
 
+
+      const versionJson = require('../version.json');
+      const os = require('os');
+      const githubUrl = 'https://github.com/Eliot-Knuchel-Code/SeaLink-Open-Source';
+      const version = versionJson.version || '1.1.3';
+      const guildCount = interaction.client.guilds.cache.size;
+      const commandCount = interaction.client.commands.size;
+      const memberCount = interaction.client.guilds.cache.reduce((acc, g) => acc + g.memberCount, 0);
+      const uptimeMs = interaction.client.uptime;
+      const uptimeSec = Math.floor(uptimeMs / 1000);
+      const uptimeStr = `${Math.floor(uptimeSec / 3600)}h ${Math.floor((uptimeSec % 3600) / 60)}m ${uptimeSec % 60}s`;
+      const sysUptimeSec = Math.floor(os.uptime());
+      const sysUptimeStr = `${Math.floor(sysUptimeSec / 3600)}h ${Math.floor((sysUptimeSec % 3600) / 60)}m ${sysUptimeSec % 60}s`;
+
       const embed = new EmbedBuilder()
-        .setTitle('ℹ️ Info SeaLink')
+        .setTitle('ℹ️ SeaLink Bot Info')
         .setColor('#1E90FF')
         .setThumbnail(interaction.client.user.displayAvatarURL())
         .addFields(
-          { name: 'Nom du bot', value: `${interaction.client.user.tag}`, inline: true },
-          { name: 'Créateur', value: 'Eliot KNUCHEL', inline: true },
-          { name: 'Version', value: '1.1.3', inline: true },
-          { name: 'Serveurs', value: `${interaction.client.guilds.cache.size}`, inline: true },
-          { name: 'Commandes principales', value: '`/ping`, `/ports`, `/vessel`, `/tides`, `/seagame`, `/promote_top`, `/alert`, `/clock`', inline: false },
-          { name: 'Ajouter le bot', value: `[Clique ici pour inviter SeaLink](${INVITE_LINK})`, inline: false }
+          { name: 'Bot Name', value: `${interaction.client.user.tag}`, inline: true },
+          { name: 'Creator', value: 'Eliot KNUCHEL', inline: true },
+          { name: 'Version', value: version, inline: true },
+          { name: 'Servers', value: `${guildCount}`, inline: true },
+          { name: 'Total Members', value: `${memberCount}`, inline: true },
+          { name: 'Commands', value: `${commandCount}`, inline: true },
+          { name: 'Bot Uptime', value: uptimeStr, inline: true },
+          { name: 'System Uptime', value: sysUptimeStr, inline: true },
+          { name: 'GitHub', value: `[View on GitHub](${githubUrl})`, inline: false },
+          { name: 'Main Commands', value: '`/ping`, `/ports`, `/vessel`, `/tides`, `/seagame`, `/promote_top`, `/alert`, `/clock`', inline: false },
+          { name: 'Invite Bot', value: `[Click here to invite SeaLink](${INVITE_LINK})`, inline: false }
         )
         .setTimestamp()
-        .setFooter({ text: 'Merci d\'utiliser SeaLink ! ⛵️' });
+        .setFooter({ text: 'Thank you for using SeaLink! ⛵️' });
 
       await interaction.user.send({ embeds: [embed] });
       await interaction.reply({ content: '✅ Je t’ai envoyé les informations en message privé !', ephemeral: true });
