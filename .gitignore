@@ -4,4 +4,3 @@ node_modules/
 
 # Sensitive and data files
 .env
-data/Ships/
