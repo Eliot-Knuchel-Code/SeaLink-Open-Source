@@ -49,37 +49,37 @@ module.exports = {
         const latOpt = interaction.options.getNumber('lat');
         const lonOpt = interaction.options.getNumber('lon');
 
-        // si lat/lon fournis, priorité
+        // If lat/lon provided, use them
         if (typeof latOpt === 'number' && typeof lonOpt === 'number') {
             lat = latOpt;
             lon = lonOpt;
         } else if (portName) {
-            // essayer de résoudre via data/ports.json
-            try {
-                const portsPath = path.join(__dirname, '..', 'data', 'ports.json');
-                const portsRaw = fs.readFileSync(portsPath, 'utf8');
-                const portsData = JSON.parse(portsRaw);
-                // ports.json attendu sous la forme { "Port Name": { "country": "...", "latitude": x, "longitude": y }, ... }
-                // on supporte recherche insensible à la casse par inclusion
-                const match = Object.keys(portsData).find(k => k.toLowerCase().includes(portName.toLowerCase()));
-                if (match) {
-                    lat = Number(portsData[match].latitude);
-                    lon = Number(portsData[match].longitude);
-                } else {
-                    // fallback: si le portName ressemble à "lat,lon"
-                    const coords = portName.split(',').map(s => s.trim()).map(Number);
-                    if (coords.length === 2 && !Number.isNaN(coords[0]) && !Number.isNaN(coords[1])) {
-                        lat = coords[0]; lon = coords[1];
-                    } else {
-                        return interaction.editReply({ content: `❌ Port introuvable dans ports.json : "${portName}". Tu peux fournir lat et lon en option.`, ephemeral: true });
+            // Flatten all ports from country-categorized ports.json
+            const portsObj = require('../data/ports.json');
+            let foundPort = null;
+            for (const country of Object.keys(portsObj)) {
+                for (const port of portsObj[country]) {
+                    if (port.name && port.name.toLowerCase().includes(portName.toLowerCase())) {
+                        foundPort = port;
+                        break;
                     }
                 }
-            } catch (err) {
-                console.error('Erreur lecture ports.json', err);
-                return interaction.editReply({ content: '❌ Impossible de lire ports.json pour résoudre le port.', ephemeral: true });
+                if (foundPort) break;
+            }
+            if (foundPort) {
+                lat = Number(foundPort.latitude);
+                lon = Number(foundPort.longitude);
+            } else {
+                // fallback: if portName looks like "lat,lon"
+                const coords = portName.split(',').map(s => s.trim()).map(Number);
+                if (coords.length === 2 && !Number.isNaN(coords[0]) && !Number.isNaN(coords[1])) {
+                    lat = coords[0]; lon = coords[1];
+                } else {
+                    return interaction.editReply({ content: `❌ Port not found in ports.json: "${portName}". You can provide lat and lon as options.`, ephemeral: true });
+                }
             }
         } else {
-            return interaction.editReply({ content: '❌ Tu dois fournir soit un port (option `port`) soit des coordonnées (`lat` et `lon`).', ephemeral: true });
+            return interaction.editReply({ content: '❌ You must provide either a port (option `port`) or coordinates (`lat` and `lon`).', ephemeral: true });
         }
 
         // 2) trouver le MRCC le plus proche via la liste statique

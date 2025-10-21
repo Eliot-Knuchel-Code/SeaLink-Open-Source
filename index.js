@@ -36,7 +36,7 @@ const dmMap = new Map();
 
 // Ready event
 
-client.on('ready', () => {
+client.on('clientReady', () => {
     console.log(`${client.user.tag} is online!`);
 
     // Statut rich presence qui change toutes les 30 sec
@@ -52,11 +52,22 @@ client.on('ready', () => {
     }, 30000);
 
     const logChannel = client.channels.cache.get(logChannelId);
-    if (logChannel) logChannel.send('✅ Bot est maintenant en ligne !');
+    if (logChannel) logChannel.send('✅ Bot is now online!');
 });
 
 // Event interaction
 client.on('interactionCreate', async interaction => {
+    if (interaction.isAutocomplete()) {
+        const command = client.commands.get(interaction.commandName);
+        if (command && command.autocomplete) {
+            try {
+                await command.autocomplete(interaction);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        return;
+    }
     if (interaction.isChatInputCommand()) {
         const command = client.commands.get(interaction.commandName);
         if (!command) return;
@@ -65,41 +76,39 @@ client.on('interactionCreate', async interaction => {
             // Log de l’utilisation
             const logChannel = interaction.guild.channels.cache.get(logChannelId);
             if (logChannel) {
-                logChannel.send(`📝 Commande \`/${interaction.commandName}\` utilisée par ${interaction.user.tag}`);
+                logChannel.send(`📝 Command \`/${interaction.commandName}\` used by ${interaction.user.tag}`);
             }
         } catch (error) {
             console.error(error);
             const errorChannel = interaction.guild.channels.cache.get(errorChannelId);
-            if (errorChannel) errorChannel.send(`⚠️ Erreur dans la commande \`/${interaction.commandName}\` : ${error.message}`);
+            if (errorChannel) errorChannel.send(`⚠️ Error in command \`/${interaction.commandName}\`: ${error.message}`);
             if (interaction.replied || interaction.deferred) {
-                await interaction.followUp({ content: '❌ Une erreur est survenue.', ephemeral: true });
+                await interaction.followUp({ content: '❌ An error occurred.', ephemeral: true });
             } else {
-                await interaction.reply({ content: '❌ Une erreur est survenue.', ephemeral: true });
+                await interaction.reply({ content: '❌ An error occurred.', ephemeral: true });
             }
         }
     } else if (interaction.isButton()) {
         // /eco shop kategori butonları
         const customId = interaction.customId;
         if (customId.startsWith('eco_shop_')) {
-            // Kategori adını normalize et
-            const normalize = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
-            const categoryRaw = customId.replace('eco_shop_', '');
-            const categoryNorm = normalize(categoryRaw);
-            // Gemileri oku ve kategoriye göre filtrele
-            const eco = require('./commands/eco.js');
-            const catalog = eco.readShipCatalog ? eco.readShipCatalog() : [];
-            const ships = catalog.filter(s => normalize(s.category || '') === categoryNorm);
-            if (!ships.length) {
-                return interaction.reply({ content: `Bu kategoride hiç model yok.`, ephemeral: true });
+            // ...existing code...
+        }
+        // Ports next/prev page buttons
+        if (customId.startsWith('ports_next_') || customId.startsWith('ports_prev_')) {
+            const pageMatch = customId.match(/ports_(?:next|prev)_(\d+)/);
+            const page = pageMatch ? parseInt(pageMatch[1], 10) : 1;
+            // Re-run the ports list command logic with new page
+            const portsCmd = require('./commands/ports.js');
+            // Simulate a new interaction with the correct page
+            // Patch: set the page option in interaction.options
+            if (interaction.options && typeof interaction.options.getInteger === 'function') {
+                interaction.options.getInteger = () => page;
+            } else {
+                interaction.options = { getInteger: () => page, getSubcommand: () => 'list' };
             }
-            // Embed ile gemi isimlerini listele
-            const { EmbedBuilder } = require('discord.js');
-            const embed = new EmbedBuilder()
-                .setTitle(`🛒 ${ships[0].category} — Modeller`)
-                .setDescription(ships.map(s => `• ${s.model}`).join('\n'))
-                .setFooter({ text: `${ships.length} model` })
-                .setTimestamp();
-            return interaction.reply({ embeds: [embed], ephemeral: true });
+            await portsCmd.execute(interaction);
+            return;
         }
     }
 });
@@ -107,9 +116,9 @@ client.on('interactionCreate', async interaction => {
 // Message de bienvenue
 client.on('guildMemberAdd', async member => {
     try {
-        await member.send(`⚓ Bienvenue ${member.user.username} ! Que tes aventures maritimes soient légendaires 🌊`);
+    await member.send(`⚓ Welcome ${member.user.username}! May your maritime adventures be legendary 🌊`);
     } catch (error) {
-        console.error(`Impossible d’envoyer le message de bienvenue à ${member.user.tag}`);
+    console.error(`Unable to send welcome message to ${member.user.tag}`);
     }
 });
 
@@ -159,17 +168,17 @@ client.on('messageReactionAdd', async (reaction, user) => {
     if (emoji === '✉️') {
         // Répondre en privé
         const filter = m => m.author.id === user.id;
-        const prompt = await reaction.message.channel.send(`${user}, écris ton message pour <@${targetUserId}> (60 sec)`);
+    const prompt = await reaction.message.channel.send(`${user}, write your message for <@${targetUserId}> (60 sec)`);
         const collector = reaction.message.channel.createMessageCollector({ filter, max: 1, time: 60000 });
 
         collector.on('collect', async m => {
             try {
                 const targetUser = await client.users.fetch(targetUserId);
                 await targetUser.send(m.content);
-                await reaction.message.channel.send(`✅ Message envoyé à <@${targetUserId}>`);
+                await reaction.message.channel.send(`✅ Message sent to <@${targetUserId}>`);
             } catch (err) {
                 console.error(err);
-                await reaction.message.channel.send('❌ Impossible d’envoyer le message.');
+                await reaction.message.channel.send('❌ Unable to send the message.');
             } finally {
                 prompt.delete().catch(() => {});
             }
@@ -183,16 +192,16 @@ client.on('messageReactionAdd', async (reaction, user) => {
     else if (emoji === '📢') {
         // Répondre en public dans le même salon du log
         const filter = m => m.author.id === user.id;
-        const prompt = await reaction.message.channel.send(`${user}, écris ton message public pour <@${targetUserId}> (60 sec)`);
+    const prompt = await reaction.message.channel.send(`${user}, write your public message for <@${targetUserId}> (60 sec)`);
         const collector = reaction.message.channel.createMessageCollector({ filter, max: 1, time: 60000 });
 
         collector.on('collect', async m => {
             try {
                 await reaction.message.channel.send(`📢 <@${targetUserId}>, ${m.content}`);
-                await reaction.message.channel.send(`✅ Message public envoyé à <@${targetUserId}>`);
+                await reaction.message.channel.send(`✅ Public message sent to <@${targetUserId}>`);
             } catch (err) {
                 console.error(err);
-                await reaction.message.channel.send('❌ Impossible d’envoyer le message.');
+                await reaction.message.channel.send('❌ Unable to send the message.');
             } finally {
                 prompt.delete().catch(() => {});
             }
@@ -205,7 +214,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
     else if (emoji === '✅') {
         // Marquer comme lu
-        reaction.message.channel.send(`✅ Message de <@${targetUserId}> marqué comme lu par ${user}`);
+    reaction.message.channel.send(`✅ Message from <@${targetUserId}> marked as read by ${user}`);
     }
 });
 

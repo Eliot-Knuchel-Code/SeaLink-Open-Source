@@ -1,165 +1,144 @@
-[
-  { "name": "Port de Shanghai", "country": "Chine", "code": "CN SHA", "lat": 31.2304, "lon": 121.4737 },
-  { "name": "Port de Singapour", "country": "Singapour", "code": "SG SIN", "lat": 1.2644, "lon": 103.822 },
-  { "name": "Port de Ningbo-Zhoushan", "country": "Chine", "code": "CN NBZ", "lat": 29.8683, "lon": 122.2807 },
-  { "name": "Port de Shenzhen", "country": "Chine", "code": "CN SHE", "lat": 22.547, "lon": 114.0628 },
-  { "name": "Port de Hong Kong", "country": "Chine", "code": "HK HKG", "lat": 22.3193, "lon": 114.1694 },
-  { "name": "Port de Busan", "country": "Corée du Sud", "code": "KR PUS", "lat": 35.1796, "lon": 129.0756 },
-  { "name": "Port de Guangzhou", "country": "Chine", "code": "CN GZ", "lat": 23.1291, "lon": 113.2644 },
-  { "name": "Port de Qingdao", "country": "Chine", "code": "CN QD", "lat": 36.0671, "lon": 120.3826 },
-  { "name": "Port de Tianjin", "country": "Chine", "code": "CN TJ", "lat": 38.9784, "lon": 117.7173 },
-  { "name": "Port de Rotterdam", "country": "Pays-Bas", "code": "NL RTM", "lat": 51.9225, "lon": 4.47917 },
-  { "name": "Port de Los Angeles", "country": "États-Unis", "code": "US LAX", "lat": 33.7361, "lon": -118.2201 },
-  { "name": "Port de Long Beach", "country": "États-Unis", "code": "US LGB", "lat": 33.759, "lon": -118.2247 },
-  { "name": "Port de Hambourg", "country": "Allemagne", "code": "DE HAM", "lat": 53.5511, "lon": 9.9937 },
-  { "name": "Port de Dubaï", "country": "Émirats Arabes Unis", "code": "AE DXB", "lat": 25.276987, "lon": 55.296249 },
-  { "name": "Port de Jebel Ali", "country": "Émirats Arabes Unis", "code": "AE JEA", "lat": 25.0657, "lon": 55.1405 },
-  { "name": "Port de Kaohsiung", "country": "Taïwan", "code": "TW KHH", "lat": 22.6163, "lon": 120.2865 },
-  { "name": "Port de Manille", "country": "Philippines", "code": "PH MNL", "lat": 14.5995, "lon": 120.9842 },
-  { "name": "Port de Jakarta", "country": "Indonésie", "code": "ID JKT", "lat": -6.2088, "lon": 106.8456 },
-  { "name": "Port de Ho Chi Minh-Ville", "country": "Vietnam", "code": "VN SGN", "lat": 10.8231, "lon": 106.6297 },
-  { "name": "Port de Mumbai", "country": "Inde", "code": "IN BOM", "lat": 18.975, "lon": 72.8258 },
-  { "name": "Port de Colombo", "country": "Sri Lanka", "code": "LK CMB", "lat": 6.9271, "lon": 79.8612 },
-  { "name": "Port de Karachi", "country": "Pakistan", "code": "PK KHI", "lat": 24.8607, "lon": 67.0011 },
-  { "name": "Port de Bandar Abbas", "country": "Iran", "code": "IR BND", "lat": 27.1833, "lon": 56.2667 },
-  { "name": "Port de Salalah", "country": "Oman", "code": "OM SLL", "lat": 17.015, "lon": 54.092 },
-  { "name": "Port de Mombasa", "country": "Kenya", "code": "KE MBA", "lat": -4.0435, "lon": 39.6682 },
-  { "name": "Port de Dar es Salaam", "country": "Tanzanie", "code": "TZ DAR", "lat": -6.7924, "lon": 39.2083 },
-  { "name": "Port de Lagos", "country": "Nigeria", "code": "NG LOS", "lat": 6.5244, "lon": 3.3792 },
-  { "name": "Port de Durban", "country": "Afrique du Sud", "code": "ZA DUR", "lat": -29.8587, "lon": 31.0218 },
-  { "name": "Port de Le Havre", "country": "France", "code": "FR LEH", "lat": 49.4944, "lon": 0.1079 },
-  { "name": "Port de Marseille", "country": "France", "code": "FR MRS", "lat": 43.2965, "lon": 5.3698 },
-  { "name": "Port de Dunkerque", "country": "France", "code": "FR DKR", "lat": 51.0375, "lon": 2.3778 },
-  { "name": "Port d'Anvers", "country": "Belgique", "code": "BE ANR", "lat": 51.2194, "lon": 4.4025 },
-  { "name": "Port de Zeebrugge", "country": "Belgique", "code": "BE ZEE", "lat": 51.3383, "lon": 3.2042 },
-  { "name": "Port de Barcelone", "country": "Espagne", "code": "ES BCN", "lat": 41.3784, "lon": 2.1923 },
-  { "name": "Port de Valence", "country": "Espagne", "code": "ES VLC", "lat": 39.4699, "lon": -0.3763 },
-  { "name": "Port de Gênes", "country": "Italie", "code": "IT GEN", "lat": 44.4056, "lon": 8.9462 },
-  { "name": "Port de Trieste", "country": "Italie", "code": "IT TRS", "lat": 45.6495, "lon": 13.7768 },
-  { "name": "Port de Venise", "country": "Italie", "code": "IT VCE", "lat": 45.4408, "lon": 12.3155 },
-  { "name": "Port de Piraeus", "country": "Grèce", "code": "GR PEA", "lat": 37.944, "lon": 23.646 },
-  { "name": "Port de Thessalonique", "country": "Grèce", "code": "GR SKG", "lat": 40.6401, "lon": 22.9444 },
-  { "name": "Port de Constanța", "country": "Roumanie", "code": "RO CND", "lat": 44.4268, "lon": 28.1056 },
-  { "name": "Port de Varna", "country": "Bulgarie", "code": "BG VAR", "lat": 43.214, "lon": 27.9147 },
-  { "name": "Port de Odessa", "country": "Ukraine", "code": "UA ODS", "lat": 46.4825, "lon": 30.7326 },
-  { "name": "Port de Saint-Pétersbourg", "country": "Russie", "code": "RU STP", "lat": 59.9343, "lon": 30.3351 },
-  { "name": "Port de Vladivostok", "country": "Russie", "code": "RU VLAD", "lat": 43.1155, "lon": 131.8855 },
-  { "name": "Port de Yokohama", "country": "Japon", "code": "JP YOK", "lat": 35.4437, "lon": 139.638 },
-  { "name": "Port de Tokyo", "country": "Japon", "code": "JP TKO", "lat": 35.6575, "lon": 139.7965 },
-  { "name": "Port de Nagoya", "country": "Japon", "code": "JP NGO", "lat": 35.0953, "lon": 136.881 },
-  { "name": "Port de Kobe", "country": "Japon", "code": "JP KOB", "lat": 34.678, "lon": 135.195 },
-  { "name": "Port de Incheon", "country": "Corée du Sud", "code": "KR ICN", "lat": 37.4563, "lon": 126.7052 },
-  { "name": "Port de Tianjin Xingang", "country": "Chine", "code": "CN TXG", "lat": 39.0167, "lon": 117.696 },
-  { "name": "Port de Laem Chabang", "country": "Thaïlande", "code": "TH LCH", "lat": 13.0366, "lon": 100.931 },
-  { "name": "Port de Kolkata", "country": "Inde", "code": "IN CCU", "lat": 22.5726, "lon": 88.3639 },
-  { "name": "Port de Chennai", "country": "Inde", "code": "IN MAA", "lat": 13.0827, "lon": 80.2707 },
-  { "name": "Port de Yangon", "country": "Myanmar", "code": "MM RGN", "lat": 16.8409, "lon": 96.1735 },
-  { "name": "Port de Ho Chi Minh-Ville", "country": "Vietnam", "code": "VN SGN", "lat": 10.7769, "lon": 106.7009 },
-  { "name": "Port de Haiphong", "country": "Vietnam", "code": "VN HPH", "lat": 20.8449, "lon": 106.6881 },
-  { "name": "Port de Busan", "country": "Corée du Sud", "code": "KR PUS", "lat": 35.1014, "lon": 129.0408 },
-  { "name": "Port de Qingdao", "country": "Chine", "code": "CN QIN", "lat": 36.0671, "lon": 120.3826 },
-  { "name": "Port de Dalian", "country": "Chine", "code": "CN DLU", "lat": 38.914, "lon": 121.6147 },
-  { "name": "Port de Tianjin", "country": "Chine", "code": "CN TJN", "lat": 39.084, "lon": 117.658 },
-  { "name": "Port de Rotterdam", "country": "Pays-Bas", "code": "NL RTM", "lat": 51.9225, "lon": 4.47917 },
-  { "name": "Port de Hambourg", "country": "Allemagne", "code": "DE HAM", "lat": 53.5511, "lon": 9.9937 },
-  { "name": "Port de Bremerhaven", "country": "Allemagne", "code": "DE BRV", "lat": 53.5392, "lon": 8.5809 },
-  { "name": "Port d'Anvers", "country": "Belgique", "code": "BE ANR", "lat": 51.2194, "lon": 4.4025 },
-  { "name": "Port de Zeebrugge", "country": "Belgique", "code": "BE ZEE", "lat": 51.3383, "lon": 3.2042 },
-  { "name": "Port de Le Havre", "country": "France", "code": "FR LEH", "lat": 49.4944, "lon": 0.1079 },
-  { "name": "Port de Marseille", "country": "France", "code": "FR MRS", "lat": 43.2965, "lon": 5.3698 },
-  { "name": "Port de Fos-sur-Mer", "country": "France", "code": "FR FOS", "lat": 43.422, "lon": 4.9956 },
-  { "name": "Port de Dunkerque", "country": "France", "code": "FR DKR", "lat": 51.0375, "lon": 2.3778 },
-  { "name": "Port de Gênes", "country": "Italie", "code": "IT GEN", "lat": 44.4056, "lon": 8.9462 },
-  { "name": "Port de Trieste", "country": "Italie", "code": "IT TRS", "lat": 45.6495, "lon": 13.7768 },
-  { "name": "Port de Venise", "country": "Italie", "code": "IT VCE", "lat": 45.4408, "lon": 12.3155 },
-  { "name": "Port de La Spezia", "country": "Italie", "code": "IT LSP", "lat": 44.1022, "lon": 9.8241 },
-  { "name": "Port de Barcelone", "country": "Espagne", "code": "ES BCN", "lat": 41.3784, "lon": 2.1923 },
-  { "name": "Port de Valence", "country": "Espagne", "code": "ES VLC", "lat": 39.4699, "lon": -0.3763 },
-  { "name": "Port de Bilbao", "country": "Espagne", "code": "ES BIO", "lat": 43.2627, "lon": -2.9253 },
-  { "name": "Port de Piraeus", "country": "Grèce", "code": "GR PEA", "lat": 37.944, "lon": 23.646 },
-  { "name": "Port de Thessalonique", "country": "Grèce", "code": "GR SKG", "lat": 40.6401, "lon": 22.9444 },
-  { "name": "Port de Patras", "country": "Grèce", "code": "GR GPA", "lat": 38.2466, "lon": 21.7346 },
-  { "name": "Port de Constanța", "country": "Roumanie", "code": "RO CND", "lat": 44.182, "lon": 28.659 },
-  { "name": "Port de Varna", "country": "Bulgarie", "code": "BG VAR", "lat": 43.214, "lon": 27.9147 },
-  { "name": "Port de Burgas", "country": "Bulgarie", "code": "BG BUR", "lat": 42.5048, "lon": 27.4626 },
-  { "name": "Port d'Odessa", "country": "Ukraine", "code": "UA ODS", "lat": 46.4825, "lon": 30.7326 },
-  { "name": "Port de Mykolaiv", "country": "Ukraine", "code": "UA MYK", "lat": 46.9750, "lon": 31.9946 },
-  { "name": "Port de Saint-Pétersbourg", "country": "Russie", "code": "RU STP", "lat": 59.9343, "lon": 30.3351 },
-  { "name": "Port de Vladivostok", "country": "Russie", "code": "RU VLAD", "lat": 43.1155, "lon": 131.8855 },
-  { "name": "Port de Yokohama", "country": "Japon", "code": "JP YOK", "lat": 35.4437, "lon": 139.638 },
-  { "name": "Port de Tokyo", "country": "Japon", "code": "JP TKO", "lat": 35.6575, "lon": 139.7965 },
-  { "name": "Port de Nagoya", "country": "Japon", "code": "JP NGO", "lat": 35.0953, "lon": 136.881 },
-  { "name": "Port de Kobe", "country": "Japon", "code": "JP KOB", "lat": 34.678, "lon": 135.195 },
-  { "name": "Port de Incheon", "country": "Corée du Sud", "code": "KR ICN", "lat": 37.4563, "lon": 126.7052 },
-  { "name": "Port de Busan", "country": "Corée du Sud", "code": "KR PUS", "lat": 35.1014, "lon": 129.0408 },
-  { "name": "Port de Laem Chabang", "country": "Thaïlande", "code": "TH LCH", "lat": 13.0366, "lon": 100.931 },
-  { "name": "Port de Bangkok", "country": "Thaïlande", "code": "TH BKK", "lat": 13.729, "lon": 100.536 },
-  { "name": "Port de Yangon", "country": "Myanmar", "code": "MM RGN", "lat": 16.8409, "lon": 96.1735 },
-  { "name": "Port de Colombo", "country": "Sri Lanka", "code": "LK CMB", "lat": 6.9271, "lon": 79.8612 },
-  { "name": "Port de Male", "country": "Maldives", "code": "MV MLE", "lat": 4.1755, "lon": 73.5093 },
-  { "name": "Port de Mombasa", "country": "Kenya", "code": "KE MBA", "lat": -4.0435, "lon": 39.6682 },
-  { "name": "Port de Dar es Salaam", "country": "Tanzanie", "code": "TZ DAR", "lat": -6.7924, "lon": 39.2083 },
-  { "name": "Port de Durban", "country": "Afrique du Sud", "code": "ZA DUR", "lat": -29.8587, "lon": 31.0218 },
-  { "name": "Port de Cape Town", "country": "Afrique du Sud", "code": "ZA CPT", "lat": -33.9249, "lon": 18.4241 },
-  { "name": "Port de Lagos", "country": "Nigeria", "code": "NG LOS", "lat": 6.5244, "lon": 3.3792 },
-  { "name": "Port de Abidjan", "country": "Côte d'Ivoire", "code": "CI ABJ", "lat": 5.3453, "lon": -4.0244 },
-  { "name": "Port de Tema", "country": "Ghana", "code": "GH TML", "lat": 5.6669, "lon": -0.0167 },
-  { "name": "Port de Dakar", "country": "Sénégal", "code": "SN DKR", "lat": 14.6928, "lon": -17.4467 },
-  { "name": "Port de Tangier Med", "country": "Maroc", "code": "MA TGM", "lat": 35.8286, "lon": -5.8023 },
-  { "name": "Port de Casablanca", "country": "Maroc", "code": "MA CAS", "lat": 33.5731, "lon": -7.5898 },
-  { "name": "Port de Alexandria", "country": "Égypte", "code": "EG ALY", "lat": 31.2001, "lon": 29.9187 },
-  { "name": "Port de Port Said", "country": "Égypte", "code": "EG PSD", "lat": 31.2653, "lon": 32.3019 },
-  { "name": "Port de Suez", "country": "Égypte", "code": "EG SUZ", "lat": 29.9668, "lon": 32.5498 },
-  { "name": "Port de Jeddah", "country": "Arabie Saoudite", "code": "SA JED", "lat": 21.4858, "lon": 39.1925 },
-  { "name": "Port de Dubaï", "country": "Émirats Arabes Unis", "code": "AE DXB", "lat": 25.276987, "lon": 55.296249 },
-  { "name": "Port de Jebel Ali", "country": "Émirats Arabes Unis", "code": "AE JEA", "lat": 25.0657, "lon": 55.1405 },
-  { "name": "Port de Muscat", "country": "Oman", "code": "OM MSC", "lat": 23.6149, "lon": 58.5453 },
-  { "name": "Port de Salalah", "country": "Oman", "code": "OM SLL", "lat": 17.015, "lon": 54.092 },
-  { "name": "Port de Bandar Abbas", "country": "Iran", "code": "IR BND", "lat": 27.1833, "lon": 56.2667 },
-  { "name": "Port de Karachi", "country": "Pakistan", "code": "PK KHI", "lat": 24.8607, "lon": 67.0011 },
-  { "name": "Port de Chittagong", "country": "Bangladesh", "code": "BD CGP", "lat": 22.3569, "lon": 91.7832 },
-  { "name": "Port de Yangon", "country": "Myanmar", "code": "MM RGN", "lat": 16.8409, "lon": 96.1735 },
-  { "name": "Port de Ho Chi Minh-Ville", "country": "Vietnam", "code": "VN SGN", "lat": 10.7769, "lon": 106.7009 },
-  { "name": "Port de Haiphong", "country": "Vietnam", "code": "VN HPH", "lat": 20.8449, "lon": 106.6881 },
-  { "name": "Port de Laem Chabang", "country": "Thaïlande", "code": "TH LCH", "lat": 13.0366, "lon": 100.931 },
-  { "name": "Port de Bangkok", "country": "Thaïlande", "code": "TH BKK", "lat": 13.729, "lon": 100.536 },
-  { "name": "Port de Kuala Lumpur (Port Klang)", "country": "Malaisie", "code": "MY PKL", "lat": 3.003, "lon": 101.396 },
-  { "name": "Port de Singapore", "country": "Singapour", "code": "SG SIN", "lat": 1.2644, "lon": 103.822 },
-  { "name": "Port de Jakarta (Tanjung Priok)", "country": "Indonésie", "code": "ID JKT", "lat": -6.128, "lon": 106.882 },
-  { "name": "Port de Surabaya", "country": "Indonésie", "code": "ID SUB", "lat": -7.2575, "lon": 112.7521 },
-  { "name": "Port de Manila", "country": "Philippines", "code": "PH MNL", "lat": 14.5995, "lon": 120.9842 },
-  { "name": "Port de Kaohsiung", "country": "Taïwan", "code": "TW KHH", "lat": 22.6163, "lon": 120.2865 },
-  { "name": "Port de Colombo", "country": "Sri Lanka", "code": "LK CMB", "lat": 6.9271, "lon": 79.8612 },
-  { "name": "Port de Male", "country": "Maldives", "code": "MV MLE", "lat": 4.1755, "lon": 73.5093 },
-  { "name": "Port de Mombasa", "country": "Kenya", "code": "KE MBA", "lat": -4.0435, "lon": 39.6682 },
-  { "name": "Port de Dar es Salaam", "country": "Tanzanie", "code": "TZ DAR", "lat": -6.7924, "lon": 39.2083 },
-  { "name": "Port de Durban", "country": "Afrique du Sud", "code": "ZA DUR", "lat": -29.8587, "lon": 31.0218 },
-  { "name": "Port de Cape Town", "country": "Afrique du Sud", "code": "ZA CPT", "lat": -33.9249, "lon": 18.4241 },
-  { "name": "Port de Lagos", "country": "Nigeria", "code": "NG LOS", "lat": 6.5244, "lon": 3.3792 },
-  { "name": "Port de Abidjan", "country": "Côte d'Ivoire", "code": "CI ABJ", "lat": 5.3453, "lon": -4.0244 },
-  { "name": "Port de Tema", "country": "Ghana", "code": "GH TML", "lat": 5.6669, "lon": -0.0167 },
-  { "name": "Port de Dakar", "country": "Sénégal", "code": "SN DKR", "lat": 14.6928, "lon": -17.4467 },
-  { "name": "Port de Tangier Med", "country": "Maroc", "code": "MA TGM", "lat": 35.8286, "lon": -5.8023 },
-  { "name": "Port de Casablanca", "country": "Maroc", "code": "MA CAS", "lat": 33.5731, "lon": -7.5898 },
-  { "name": "Port d'Alexandrie", "country": "Égypte", "code": "EG ALY", "lat": 31.2001, "lon": 29.9187 },
-  { "name": "Port de Port Said", "country": "Égypte", "code": "EG PSD", "lat": 31.2653, "lon": 32.3019 },
-  { "name": "Port de Suez", "country": "Égypte", "code": "EG SUZ", "lat": 29.9668, "lon": 32.5498 },
-  { "name": "Port de Jeddah", "country": "Arabie Saoudite", "code": "SA JED", "lat": 21.4858, "lon": 39.1925 },
-  { "name": "Port de Dubaï", "country": "Émirats Arabes Unis", "code": "AE DXB", "lat": 25.276987, "lon": 55.296249 },
-  { "name": "Port de Jebel Ali", "country": "Émirats Arabes Unis", "code": "AE JEA", "lat": 25.0657, "lon": 55.1405 },
-  { "name": "Port de Muscat", "country": "Oman", "code": "OM MSC", "lat": 23.6149, "lon": 58.5453 },
-  { "name": "Port de Salalah", "country": "Oman", "code": "OM SLL", "lat": 17.015, "lon": 54.092 },
-  { "name": "Port de Bandar Abbas", "country": "Iran", "code": "IR BND", "lat": 27.1833, "lon": 56.2667 },
-  { "name": "Port de Karachi", "country": "Pakistan", "code": "PK KHI", "lat": 24.8607, "lon": 67.0011 },
-  { "name": "Port de Chittagong", "country": "Bangladesh", "code": "BD CGP", "lat": 22.3569, "lon": 91.7832 },
-  { "name": "Port de Kolkata", "country": "Inde", "code": "IN CCU", "lat": 22.5726, "lon": 88.3639 },
-  { "name": "Port de Chennai", "country": "Inde", "code": "IN MAA", "lat": 13.0827, "lon": 80.2707 },
-  { "name": "Port de Mumbai", "country": "Inde", "code": "IN BOM", "lat": 18.975, "lon": 72.8258 },
-  { "name": "Port de Yangon", "country": "Myanmar", "code": "MM RGN", "lat": 16.8409, "lon": 96.1735 },
-  { "name": "Port de Ho Chi Minh-Ville", "country": "Vietnam", "code": "VN SGN", "lat": 10.7769, "lon": 106.7009 },
-  { "name": "Port de Haiphong", "country": "Vietnam", "code": "VN HPH", "lat": 20.8449, "lon": 106.6881 },
-  { "name": "Port de Laem Chabang", "country": "Thaïlande", "code": "TH LCH", "lat": 13.0366, "lon": 100.931 },
-  { "name": "Port de Bangkok", "country": "Thaïlande", "code": "TH BKK", "lat": 13.729, "lon": 100.536 },
-  { "name": "Port de Singapore", "country": "Singapour", "code": "SG SIN", "lat": 1.2644, "lon": 103.822 },
-  { "name": "Port de Jakarta (Tanjung Priok)", "country": "Indonésie", "code": "ID JKT", "lat": -6.128, "lon": 106.882 }
-]
+{
+  "Bangladesh": [
+    { "name": "Chittagong Port", "country": "Bangladesh", "code": "BD CGP", "lat": 22.3569, "lon": 91.7832 }
+  ],
+  "Belgium": [
+    { "name": "Antwerp Port", "country": "Belgium", "code": "BE ANR", "lat": 51.2194, "lon": 4.4025 },
+    { "name": "Zeebrugge Port", "country": "Belgium", "code": "BE ZEE", "lat": 51.3383, "lon": 3.2042 }
+  ],
+  "Bulgaria": [
+    { "name": "Burgas Port", "country": "Bulgaria", "code": "BG BUR", "lat": 42.5048, "lon": 27.4626 },
+    { "name": "Varna Port", "country": "Bulgaria", "code": "BG VAR", "lat": 43.214, "lon": 27.9147 }
+  ],
+  "China": [
+    { "name": "Dalian Port", "country": "China", "code": "CN DLU", "lat": 38.914, "lon": 121.6147 },
+    { "name": "Guangzhou Port", "country": "China", "code": "CN GZ", "lat": 23.1291, "lon": 113.2644 },
+    { "name": "Hong Kong Port", "country": "China", "code": "HK HKG", "lat": 22.3193, "lon": 114.1694 },
+    { "name": "Ningbo-Zhoushan Port", "country": "China", "code": "CN NBZ", "lat": 29.8683, "lon": 122.2807 },
+    { "name": "Qingdao Port", "country": "China", "code": "CN QD", "lat": 36.0671, "lon": 120.3826 },
+    { "name": "Qinhuangdao Port", "country": "China", "code": "CN QIN", "lat": 36.0671, "lon": 120.3826 },
+    { "name": "Shanghai Port", "country": "China", "code": "CN SHA", "lat": 31.2304, "lon": 121.4737 },
+    { "name": "Shenzhen Port", "country": "China", "code": "CN SHE", "lat": 22.547, "lon": 114.0628 },
+    { "name": "Tianjin Port", "country": "China", "code": "CN TJ", "lat": 38.9784, "lon": 117.7173 },
+    { "name": "Tianjin Xingang Port", "country": "China", "code": "CN TXG", "lat": 39.0167, "lon": 117.696 }
+  ],
+  "Egypt": [
+    { "name": "Alexandria Port", "country": "Egypt", "code": "EG ALY", "lat": 31.2001, "lon": 29.9187 },
+    { "name": "Port Said", "country": "Egypt", "code": "EG PSD", "lat": 31.2653, "lon": 32.3019 },
+    { "name": "Suez Port", "country": "Egypt", "code": "EG SUZ", "lat": 29.9668, "lon": 32.5498 }
+  ],
+  "France": [
+    { "name": "Dunkerque Port", "country": "France", "code": "FR DKR", "lat": 51.0375, "lon": 2.3778 },
+    { "name": "Fos-sur-Mer Port", "country": "France", "code": "FR FOS", "lat": 43.422, "lon": 4.9956 },
+    { "name": "Le Havre Port", "country": "France", "code": "FR LEH", "lat": 49.4944, "lon": 0.1079 },
+    { "name": "Marseille Port", "country": "France", "code": "FR MRS", "lat": 43.2965, "lon": 5.3698 }
+  ],
+  "Germany": [
+    { "name": "Bremerhaven Port", "country": "Germany", "code": "DE BRV", "lat": 53.5392, "lon": 8.5809 },
+    { "name": "Hamburg Port", "country": "Germany", "code": "DE HAM", "lat": 53.5511, "lon": 9.9937 }
+  ],
+  "Greece": [
+    { "name": "Patras Port", "country": "Greece", "code": "GR GPA", "lat": 38.2466, "lon": 21.7346 },
+    { "name": "Piraeus Port", "country": "Greece", "code": "GR PEA", "lat": 37.944, "lon": 23.646 },
+    { "name": "Thessaloniki Port", "country": "Greece", "code": "GR SKG", "lat": 40.6401, "lon": 22.9444 }
+  ],
+  "India": [
+    { "name": "Chennai Port", "country": "India", "code": "IN MAA", "lat": 13.0827, "lon": 80.2707 },
+    { "name": "Kolkata Port", "country": "India", "code": "IN CCU", "lat": 22.5726, "lon": 88.3639 },
+    { "name": "Mumbai Port", "country": "India", "code": "IN BOM", "lat": 18.975, "lon": 72.8258 }
+  ],
+  "Indonesia": [
+    { "name": "Jakarta Port", "country": "Indonesia", "code": "ID JKT", "lat": -6.2088, "lon": 106.8456 },
+    { "name": "Surabaya Port", "country": "Indonesia", "code": "ID SUB", "lat": -7.2575, "lon": 112.7521 }
+  ],
+  "Iran": [
+    { "name": "Bandar Abbas Port", "country": "Iran", "code": "IR BND", "lat": 27.1833, "lon": 56.2667 }
+  ],
+  "Italy": [
+    { "name": "Genoa Port", "country": "Italy", "code": "IT GEN", "lat": 44.4056, "lon": 8.9462 },
+    { "name": "La Spezia Port", "country": "Italy", "code": "IT LSP", "lat": 44.1022, "lon": 9.8241 },
+    { "name": "Trieste Port", "country": "Italy", "code": "IT TRS", "lat": 45.6495, "lon": 13.7768 },
+    { "name": "Venice Port", "country": "Italy", "code": "IT VCE", "lat": 45.4408, "lon": 12.3155 }
+  ],
+  "Japan": [
+    { "name": "Kobe Port", "country": "Japan", "code": "JP KOB", "lat": 34.678, "lon": 135.195 },
+    { "name": "Nagoya Port", "country": "Japan", "code": "JP NGO", "lat": 35.0953, "lon": 136.881 },
+    { "name": "Tokyo Port", "country": "Japan", "code": "JP TKO", "lat": 35.6575, "lon": 139.7965 },
+    { "name": "Yokohama Port", "country": "Japan", "code": "JP YOK", "lat": 35.4437, "lon": 139.638 }
+  ],
+  "Kenya": [
+    { "name": "Mombasa Port", "country": "Kenya", "code": "KE MBA", "lat": -4.0435, "lon": 39.6682 }
+  ],
+  "Malaysia": [
+    { "name": "Port Klang", "country": "Malaysia", "code": "MY PKL", "lat": 3.003, "lon": 101.396 }
+  ],
+  "Morocco": [
+    { "name": "Casablanca Port", "country": "Morocco", "code": "MA CAS", "lat": 33.5731, "lon": -7.5898 },
+    { "name": "Tangier Med Port", "country": "Morocco", "code": "MA TGM", "lat": 35.8286, "lon": -5.8023 }
+  ],
+  "Netherlands": [
+    { "name": "Rotterdam Port", "country": "Netherlands", "code": "NL RTM", "lat": 51.9225, "lon": 4.47917 }
+  ],
+  "Nigeria": [
+    { "name": "Lagos Port", "country": "Nigeria", "code": "NG LOS", "lat": 6.5244, "lon": 3.3792 }
+  ],
+  "Oman": [
+    { "name": "Muscat Port", "country": "Oman", "code": "OM MSC", "lat": 23.6149, "lon": 58.5453 },
+    { "name": "Salalah Port", "country": "Oman", "code": "OM SLL", "lat": 17.015, "lon": 54.092 }
+  ],
+  "Pakistan": [
+    { "name": "Karachi Port", "country": "Pakistan", "code": "PK KHI", "lat": 24.8607, "lon": 67.0011 }
+  ],
+  "Philippines": [
+    { "name": "Manila Port", "country": "Philippines", "code": "PH MNL", "lat": 14.5995, "lon": 120.9842 }
+  ],
+  "Romania": [
+    { "name": "Constanta Port", "country": "Romania", "code": "RO CND", "lat": 44.4268, "lon": 28.1056 }
+  ],
+  "Russia": [
+    { "name": "Saint Petersburg Port", "country": "Russia", "code": "RU STP", "lat": 59.9343, "lon": 30.3351 },
+    { "name": "Vladivostok Port", "country": "Russia", "code": "RU VLAD", "lat": 43.1155, "lon": 131.8855 }
+  ],
+  "Singapore": [
+    { "name": "Singapore Port", "country": "Singapore", "code": "SG SIN", "lat": 1.2644, "lon": 103.822 }
+  ],
+  "South Africa": [
+    { "name": "Cape Town Port", "country": "South Africa", "code": "ZA CPT", "lat": -33.9249, "lon": 18.4241 },
+    { "name": "Durban Port", "country": "South Africa", "code": "ZA DUR", "lat": -29.8587, "lon": 31.0218 }
+  ],
+  "South Korea": [
+    { "name": "Busan Port", "country": "South Korea", "code": "KR PUS", "lat": 35.1796, "lon": 129.0756 },
+    { "name": "Incheon Port", "country": "South Korea", "code": "KR ICN", "lat": 37.4563, "lon": 126.7052 }
+  ],
+  "Spain": [
+    { "name": "Barcelona Port", "country": "Spain", "code": "ES BCN", "lat": 41.3784, "lon": 2.1923 },
+    { "name": "Bilbao Port", "country": "Spain", "code": "ES BIO", "lat": 43.2627, "lon": -2.9253 },
+    { "name": "Valencia Port", "country": "Spain", "code": "ES VLC", "lat": 39.4699, "lon": -0.3763 }
+  ],
+  "Sri Lanka": [
+    { "name": "Colombo Port", "country": "Sri Lanka", "code": "LK CMB", "lat": 6.9271, "lon": 79.8612 }
+  ],
+  "Taiwan": [
+    { "name": "Kaohsiung Port", "country": "Taiwan", "code": "TW KHH", "lat": 22.6163, "lon": 120.2865 }
+  ],
+  "Thailand": [
+    { "name": "Bangkok Port", "country": "Thailand", "code": "TH BKK", "lat": 13.729, "lon": 100.536 },
+    { "name": "Laem Chabang Port", "country": "Thailand", "code": "TH LCH", "lat": 13.0366, "lon": 100.931 }
+  ],
+  "Ukraine": [
+    { "name": "Mykolaiv Port", "country": "Ukraine", "code": "UA MYK", "lat": 46.9750, "lon": 31.9946 },
+    { "name": "Odessa Port", "country": "Ukraine", "code": "UA ODS", "lat": 46.4825, "lon": 30.7326 }
+  ],
+  "United Arab Emirates": [
+    { "name": "Dubai Port", "country": "United Arab Emirates", "code": "AE DXB", "lat": 25.276987, "lon": 55.296249 },
+    { "name": "Jebel Ali Port", "country": "United Arab Emirates", "code": "AE JEA", "lat": 25.0657, "lon": 55.1405 }
+  ],
+  "United States": [
+    { "name": "Long Beach Port", "country": "United States", "code": "US LGB", "lat": 33.759, "lon": -118.2247 },
+    { "name": "Los Angeles Port", "country": "United States", "code": "US LAX", "lat": 33.7361, "lon": -118.2201 }
+  ],
+  "Vietnam": [
+    { "name": "Haiphong Port", "country": "Vietnam", "code": "VN HPH", "lat": 20.8449, "lon": 106.6881 },
+    { "name": "Ho Chi Minh City Port", "country": "Vietnam", "code": "VN SGN", "lat": 10.8231, "lon": 106.6297 }
+  ]
+}

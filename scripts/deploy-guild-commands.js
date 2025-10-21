@@ -45,6 +45,36 @@ function reorderCommand(cmdJson) {
 
 (async () => {
   try {
+    const rest = new REST({ version: '10' }).setToken(TOKEN);
+    // Önce mevcut komutları sil
+    const existing = await rest.get(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID));
+    if (Array.isArray(existing) && existing.length > 0) {
+      console.log(`🗑️ Deleting ${existing.length} existing guild commands...`);
+      for (const cmd of existing) {
+        let deleted = false;
+        let attempts = 0;
+        while (!deleted && attempts < 5) {
+          try {
+            await rest.delete(Routes.applicationGuildCommand(CLIENT_ID, GUILD_ID, cmd.id));
+            console.log(` - Deleted: ${cmd.name}`);
+            deleted = true;
+          } catch (err) {
+            attempts++;
+            if (err?.code === 20028 || (err?.rawError && err.rawError.code === 20028)) { // Discord rate limit
+              console.warn(`⏳ Rate limited while deleting ${cmd.name}, waiting 5s...`);
+              await new Promise(res => setTimeout(res, 5000));
+            } else {
+              console.error(`❌ Failed to delete command ${cmd.name} (attempt ${attempts}):`, err);
+              await new Promise(res => setTimeout(res, 1000));
+            }
+          }
+        }
+        await new Promise(res => setTimeout(res, 500)); // 500ms gecikme
+      }
+      console.log('✅ All existing guild commands deleted.');
+    }
+
+    // Komutları yükle
     const commands = [];
     const commandsPath = path.join(__dirname, '..', 'commands');
     const commandFiles = fs.existsSync(commandsPath)
@@ -58,8 +88,6 @@ function reorderCommand(cmdJson) {
     for (const file of commandFiles) {
       const filePath = path.join(commandsPath, file);
       const command = require(filePath);
-
-      // Certains exports utilisent module.exports = [ ... ] (tableau) : gère ce cas
       if (Array.isArray(command)) {
         for (const c of command) {
           if (c.data) commands.push(c.data.toJSON());
@@ -82,29 +110,21 @@ function reorderCommand(cmdJson) {
     // Logging summary
     const changedCount = transformed.filter(t => t.changed).length;
     console.log(`🔧 Automatic option reordering complete. ${changedCount}/${transformed.length} commands modified if needed.`);
-
-    // Show list of modified commands (optional but useful)
     transformed.forEach((t, i) => {
       if (t.changed) {
         console.log(` - Command index ${i} (${commands[i].name}): options reordered`);
       }
     });
 
-    // Prépare pour l'envoi
-    const rest = new REST({ version: '10' }).setToken(TOKEN);
-
-  console.log(`🚀 Deploying ${transformed.length} commands to server ${GUILD_ID}...`);
-  // Guild-only deploy (no global deploy):
+    console.log(`🚀 Deploying ${transformed.length} commands to server ${GUILD_ID}...`);
     const result = await rest.put(
       Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID),
       { body: transformed.map(t => t.json) }
     );
-
-  console.log('✅ Guild-only deploy complete. Global deploy removed.');
+    console.log('✅ Guild-only deploy complete. Global deploy removed.');
     process.exit(0);
   } catch (error) {
     console.error('❌ Error during deployment:', error);
-    // If the error contains API details
     if (error?.rawError) {
       console.error('rawError:', JSON.stringify(error.rawError, null, 2));
     }

@@ -18,7 +18,6 @@ module.exports = {
     .addStringOption(opt => opt.setName('id').setDescription('ID de la proposition (ex: p_163...)').setRequired(true))
     .addStringOption(opt => opt.setName('note').setDescription('Note / raison (optionnel)').setRequired(false))
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
-
   async execute(interaction) {
     await interaction.deferReply({ ephemeral: true });
 
@@ -34,10 +33,16 @@ module.exports = {
     const item = pending[id];
 
     if (action === 'approve') {
-      const ports = readJson(PORTS_PATH) || [];
-      // ensure no duplicate name/coords exist (simple check)
-      const exists = ports.some(p => p.name.toLowerCase() === item.name.toLowerCase() ||
-        (p.latitude === item.latitude && p.longitude === item.longitude));
+      const ports = readJson(PORTS_PATH) || {};
+      // ensure no duplicate name/coords exist (search all countries)
+      let exists = false;
+      for (const country of Object.keys(ports)) {
+        if (ports[country].some(p => p.name.toLowerCase() === item.name.toLowerCase() ||
+          (p.latitude === item.latitude && p.longitude === item.longitude))) {
+          exists = true;
+          break;
+        }
+      }
       if (exists) {
         // remove from pending to avoid reprocessing, but inform admin
         delete pending[id];
@@ -47,18 +52,20 @@ module.exports = {
           const proposerUser = await interaction.client.users.fetch(item.proposer.id).catch(()=>null);
           if (proposerUser) {
             await proposerUser.send(
-              `⚠️ Bonjour ${item.proposer.tag},\n\n` +
-              `Votre proposition de port **${item.name}** (id: ${id}) n'a pas été ajoutée car un port similaire existe déjà.\n` +
-              `Si vous pensez qu'il s'agit d'une erreur, contactez un administrateur.`
+              `⚠️ Hello ${item.proposer.tag},\n\n` +
+              `Your port proposal **${item.name}** (id: ${id}) was not added because a similar port already exists.\n` +
+              `If you believe this is a mistake, please contact an administrator.`
             ).catch(()=>{});
           }
         } catch (e) { /* ignore */ }
 
-        return interaction.editReply({ content: `⚠️ Un port semblable existe déjà. Proposition ${id} supprimée des pending.`, ephemeral: true });
+        return interaction.editReply({ content: `⚠️ A similar port already exists. Proposal ${id} removed from pending.`, ephemeral: true });
       }
 
-      // push to ports
-      ports.push({
+      // Add port under correct country
+      const countryKey = item.country || 'Unknown';
+      if (!ports[countryKey]) ports[countryKey] = [];
+      ports[countryKey].push({
         id: `port_${Date.now()}`,
         name: item.name,
         country: item.country,
@@ -93,6 +100,7 @@ module.exports = {
           if (ch && ch.isTextBased()) ch.send({ embeds: [embed] }).catch(()=>{});
         }
       } catch (e) { /* ignore */ }
+  // ...existing code...
 
       // Notify proposer by DM
       try {
@@ -160,4 +168,4 @@ module.exports = {
 
     return interaction.editReply({ content: '❌ Action inconnue. Utilise `approve` ou `reject`.', ephemeral: true });
   }
-};
+}

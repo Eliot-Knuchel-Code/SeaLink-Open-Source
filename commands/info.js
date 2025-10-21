@@ -25,6 +25,13 @@ module.exports = {
       const sysUptimeSec = Math.floor(os.uptime());
       const sysUptimeStr = `${Math.floor(sysUptimeSec / 3600)}h ${Math.floor((sysUptimeSec % 3600) / 60)}m ${sysUptimeSec % 60}s`;
 
+      // RAM info
+      const usedMemBytes = process.memoryUsage().rss;
+      const usedMemMB = (usedMemBytes / 1024 / 1024).toFixed(2);
+      const totalMemBytes = os.totalmem();
+      const totalMemMB = (totalMemBytes / 1024 / 1024).toFixed(2);
+      const ramPercent = ((usedMemBytes / totalMemBytes) * 100).toFixed(2);
+
       const embed = new EmbedBuilder()
         .setTitle('ℹ️ SeaLink Bot Info')
         .setColor('#1E90FF')
@@ -38,6 +45,7 @@ module.exports = {
           { name: 'Commands', value: `${commandCount}`, inline: true },
           { name: 'Bot Uptime', value: uptimeStr, inline: true },
           { name: 'System Uptime', value: sysUptimeStr, inline: true },
+          { name: 'RAM Usage', value: `${usedMemMB} MB / ${totalMemMB} MB (${ramPercent}%)`, inline: true },
           { name: 'GitHub', value: `[View on GitHub](${githubUrl})`, inline: false },
           { name: 'Main Commands', value: '`/ping`, `/ports`, `/vessel`, `/tides`, `/seagame`, `/promote_top`, `/alert`, `/clock`', inline: false },
           { name: 'Invite Bot', value: `[Click here to invite SeaLink](${INVITE_LINK})`, inline: false }
