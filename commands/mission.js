@@ -5,7 +5,7 @@ const path = require('path');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const ECO_PATH = path.join(DATA_DIR, 'eco.json');
-const BOATS_PATH = path.join(DATA_DIR, 'boats.json');
+const SHIPS_DIR = path.join(DATA_DIR, 'Ships');
 const COOLDOWN_PATH = path.join(DATA_DIR, 'missions_cooldown.json');
 const MISSIONS_CATALOG = path.join(DATA_DIR, 'missions_catalog.json');
 const MISSIONS_HISTORY = path.join(DATA_DIR, 'missions_history.json');
@@ -13,12 +13,29 @@ const MISSIONS_HISTORY = path.join(DATA_DIR, 'missions_history.json');
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(COOLDOWN_PATH)) fs.writeFileSync(COOLDOWN_PATH, JSON.stringify({}));
 if (!fs.existsSync(MISSIONS_CATALOG)) fs.writeFileSync(MISSIONS_CATALOG, JSON.stringify([], null, 2));
-if (!fs.existsSync(BOATS_PATH)) fs.writeFileSync(BOATS_PATH, JSON.stringify([], null, 2));
+
 if (!fs.existsSync(ECO_PATH)) fs.writeFileSync(ECO_PATH, JSON.stringify({}, null, 2));
 if (!fs.existsSync(MISSIONS_HISTORY)) fs.writeFileSync(MISSIONS_HISTORY, JSON.stringify([], null, 2));
 
-function read(p){ try { return JSON.parse(fs.readFileSync(p,'utf8')); } catch(e){ return null; } }
-function write(p,d){ fs.writeFileSync(p, JSON.stringify(d, null, 2)); }
+
+function readShipCatalog() {
+  // Reads all ship model files from Ships subfolders
+  const ships = [];
+  if (fs.existsSync(SHIPS_DIR)) {
+    const categories = fs.readdirSync(SHIPS_DIR, { withFileTypes: true }).filter(d => d.isDirectory());
+    for (const cat of categories) {
+      const catPath = path.join(SHIPS_DIR, cat.name);
+      const files = fs.readdirSync(catPath).filter(f => f.endsWith('.json'));
+      for (const file of files) {
+        try {
+          const data = JSON.parse(fs.readFileSync(path.join(catPath, file), 'utf8'));
+          ships.push(data);
+        } catch {}
+      }
+    }
+  }
+  return ships;
+}
 
 const INSURANCE_LEVELS = {
   basic: { reduceDamagePct: 50, costRatio: 0.20 },
@@ -40,7 +57,7 @@ module.exports = {
     const type = (interaction.options.getString('type') || 'courte').toLowerCase();
 
     const eco = read(ECO_PATH) || {};
-    const catalog = read(BOATS_PATH) || [];
+  const catalog = readShipCatalog();
     const cooldowns = read(COOLDOWN_PATH) || {};
     const missionsCatalog = read(MISSIONS_CATALOG) || [];
     const history = read(MISSIONS_HISTORY) || [];

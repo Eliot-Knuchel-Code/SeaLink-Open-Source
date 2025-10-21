@@ -56,28 +56,49 @@ client.on('ready', () => {
 
 // Event interaction
 client.on('interactionCreate', async interaction => {
-    if (!interaction.isChatInputCommand()) return;
-
-    const command = client.commands.get(interaction.commandName);
-    if (!command) return;
-
-    try {
-        await command.execute(interaction);
-
-        // Log de l’utilisation
-        const logChannel = interaction.guild.channels.cache.get(logChannelId);
-        if (logChannel) {
-            logChannel.send(`📝 Commande \`/${interaction.commandName}\` utilisée par ${interaction.user.tag}`);
+    if (interaction.isChatInputCommand()) {
+        const command = client.commands.get(interaction.commandName);
+        if (!command) return;
+        try {
+            await command.execute(interaction);
+            // Log de l’utilisation
+            const logChannel = interaction.guild.channels.cache.get(logChannelId);
+            if (logChannel) {
+                logChannel.send(`📝 Commande \`/${interaction.commandName}\` utilisée par ${interaction.user.tag}`);
+            }
+        } catch (error) {
+            console.error(error);
+            const errorChannel = interaction.guild.channels.cache.get(errorChannelId);
+            if (errorChannel) errorChannel.send(`⚠️ Erreur dans la commande \`/${interaction.commandName}\` : ${error.message}`);
+            if (interaction.replied || interaction.deferred) {
+                await interaction.followUp({ content: '❌ Une erreur est survenue.', ephemeral: true });
+            } else {
+                await interaction.reply({ content: '❌ Une erreur est survenue.', ephemeral: true });
+            }
         }
-
-    } catch (error) {
-        console.error(error);
-        const errorChannel = interaction.guild.channels.cache.get(errorChannelId);
-        if (errorChannel) errorChannel.send(`⚠️ Erreur dans la commande \`/${interaction.commandName}\` : ${error.message}`);
-        if (interaction.replied || interaction.deferred) {
-            await interaction.followUp({ content: '❌ Une erreur est survenue.', ephemeral: true });
-        } else {
-            await interaction.reply({ content: '❌ Une erreur est survenue.', ephemeral: true });
+    } else if (interaction.isButton()) {
+        // /eco shop kategori butonları
+        const customId = interaction.customId;
+        if (customId.startsWith('eco_shop_')) {
+            // Kategori adını normalize et
+            const normalize = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+            const categoryRaw = customId.replace('eco_shop_', '');
+            const categoryNorm = normalize(categoryRaw);
+            // Gemileri oku ve kategoriye göre filtrele
+            const eco = require('./commands/eco.js');
+            const catalog = eco.readShipCatalog ? eco.readShipCatalog() : [];
+            const ships = catalog.filter(s => normalize(s.category || '') === categoryNorm);
+            if (!ships.length) {
+                return interaction.reply({ content: `Bu kategoride hiç model yok.`, ephemeral: true });
+            }
+            // Embed ile gemi isimlerini listele
+            const { EmbedBuilder } = require('discord.js');
+            const embed = new EmbedBuilder()
+                .setTitle(`🛒 ${ships[0].category} — Modeller`)
+                .setDescription(ships.map(s => `• ${s.model}`).join('\n'))
+                .setFooter({ text: `${ships.length} model` })
+                .setTimestamp();
+            return interaction.reply({ embeds: [embed], ephemeral: true });
         }
     }
 });

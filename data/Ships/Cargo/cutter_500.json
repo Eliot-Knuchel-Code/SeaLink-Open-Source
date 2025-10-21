@@ -1,0 +1,9 @@
+{
+  "model": "Cutter 500",
+  "id": "cutter_500",
+  "price": 500,
+  "speed": 15,
+  "reliability": 95,
+  "capacity": 40,
+  "description": "Bateau polyvalent pour missions commerciales."
+}

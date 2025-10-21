@@ -1,0 +1,9 @@
+{
+  "model": "Oil Master 1500",
+  "id": "oil_master_1500",
+  "price": 3000,
+  "speed": 9,
+  "reliability": 88,
+  "capacity": 500,
+  "description": "Large tanker for oil transport."
+}
