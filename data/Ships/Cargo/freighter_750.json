@@ -1,0 +1,9 @@
+{
+  "model": "Freighter 750",
+  "id": "freighter_750",
+  "price": 1100,
+  "speed": 14,
+  "reliability": 90,
+  "capacity": 80,
+  "description": "Reliable freighter for small commercial tasks."
+}

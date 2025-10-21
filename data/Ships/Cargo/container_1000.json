@@ -1,0 +1,9 @@
+{
+  "model": "Container 1000",
+  "id": "container_1000",
+  "price": 1500,
+  "speed": 12,
+  "reliability": 88,
+  "capacity": 120,
+  "description": "Standard container ship for medium cargo missions."
+}

@@ -1,0 +1,9 @@
+{
+  "model": "Island Queen",
+  "id": "island_queen",
+  "price": 4200,
+  "speed": 15,
+  "reliability": 87,
+  "capacity": 220,
+  "description": "Popular cruise ship for island tours."
+}

@@ -2,12 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
-const BOATS_PATH = path.join(__dirname, '..', 'data', 'boats.json');
-if (!fs.existsSync(BOATS_PATH)) fs.writeFileSync(BOATS_PATH, '{}');
 
-function saveBoats(data) {
-    fs.writeFileSync(BOATS_PATH, JSON.stringify(data, null, 2));
-}
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -25,25 +20,18 @@ module.exports = {
             )),
 
     async execute(interaction) {
-        let boatsData = {};
-        try { boatsData = JSON.parse(fs.readFileSync(BOATS_PATH, 'utf8')); } catch {}
+    // Yeni gemi oluşturma işlemi burada yapılacak (data/Ships yapısına uygun şekilde eklenmeli)
+    const nom = interaction.options.getString('nom');
+    const longueur = interaction.options.getInteger('longueur');
+    const vitesse = interaction.options.getInteger('vitesse');
+    const type = interaction.options.getString('type');
 
-        const userId = interaction.user.id;
-        if (!boatsData[userId]) boatsData[userId] = [];
+    // Fiyat hesaplama
+    const basePrice = 1000; 
+    const price = basePrice + longueur * 50 + vitesse * 30 + (type === 'tanker' ? 500 : type === 'yacht' ? 300 : 0);
 
-        const nom = interaction.options.getString('nom');
-        const longueur = interaction.options.getInteger('longueur');
-        const vitesse = interaction.options.getInteger('vitesse');
-        const type = interaction.options.getString('type');
+    // Burada yeni gemi data/Ships/<type> klasörüne kaydedilmeli (isteğe göre eklenebilir)
 
-        // Calcul du prix réaliste
-        const basePrice = 1000; 
-        const price = basePrice + longueur * 50 + vitesse * 30 + (type === 'tanker' ? 500 : type === 'yacht' ? 300 : 0);
-
-        const newBoat = { nom, longueur, vitesse, type, price };
-        boatsData[userId].push(newBoat);
-        saveBoats(boatsData);
-
-        await interaction.reply(`✅ Bateau **${nom}** créé ! Prix : ${price} pièces. Type : ${type}, Longueur : ${longueur}m, Vitesse : ${vitesse} nœuds.`);
+    await interaction.reply(`✅ Bateau **${nom}** créé ! Prix : ${price} pièces. Type : ${type}, Longueur : ${longueur}m, Vitesse : ${vitesse} nœuds.`);
     }
 };

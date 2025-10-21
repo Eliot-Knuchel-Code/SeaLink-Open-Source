@@ -5,11 +5,28 @@ const path = require('path');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-const BOATS_PATH = path.join(DATA_DIR, 'boats.json');
+const SHIPS_DIR = path.join(DATA_DIR, 'Ships');
 const ECO_PATH = path.join(DATA_DIR, 'eco.json');
 
-function read(p){ try { return JSON.parse(fs.readFileSync(p,'utf8')); } catch(e) { return null; } }
-function write(p,d){ fs.writeFileSync(p, JSON.stringify(d,null,2)); }
+
+function readShipCatalog() {
+  // Reads all ship model files from Ships subfolders
+  const ships = [];
+  if (fs.existsSync(SHIPS_DIR)) {
+    const categories = fs.readdirSync(SHIPS_DIR, { withFileTypes: true }).filter(d => d.isDirectory());
+    for (const cat of categories) {
+      const catPath = path.join(SHIPS_DIR, cat.name);
+      const files = fs.readdirSync(catPath).filter(f => f.endsWith('.json'));
+      for (const file of files) {
+        try {
+          const data = JSON.parse(fs.readFileSync(path.join(catPath, file), 'utf8'));
+          ships.push(data);
+        } catch {}
+      }
+    }
+  }
+  return ships;
+}
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -19,7 +36,7 @@ module.exports = {
   async execute(interaction) {
     await interaction.deferReply({ ephemeral: true });
     const modelId = interaction.options.getString('model').trim();
-    const catalog = read(BOATS_PATH) || [];
+  const catalog = readShipCatalog();
     const eco = read(ECO_PATH) || {};
     const userId = interaction.user.id;
 
