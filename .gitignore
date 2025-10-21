@@ -1,3 +1,7 @@
 node_modules/
 .DS_Store
 *.log
+
+# Sensitive and data files
+.env
+data/Ships/
