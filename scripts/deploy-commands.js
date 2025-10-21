@@ -9,7 +9,7 @@ const GUILD_ID = process.env.GUILD_ID;
 const TOKEN = process.env.TOKEN;
 
 if (!CLIENT_ID || !GUILD_ID || !TOKEN) {
-  console.error('❌ CLIENT_ID, GUILD_ID ou TOKEN manquant dans .env');
+  console.error('❌ CLIENT_ID, GUILD_ID or TOKEN missing in .env');
   process.exit(1);
 }
 
@@ -52,7 +52,7 @@ function reorderCommand(cmdJson) {
       : [];
 
     if (commandFiles.length === 0) {
-      console.warn('⚠️ Aucun fichier de commande trouvé dans ./commands');
+      console.warn('⚠️ No command files found in ./commands');
     }
 
     for (const file of commandFiles) {
@@ -67,7 +67,7 @@ function reorderCommand(cmdJson) {
       } else if (command.data) {
         commands.push(command.data.toJSON());
       } else {
-        console.warn(`⚠️ Le fichier ${file} n'exporte pas de .data. Ignoré.`);
+        console.warn(`⚠️ The file ${file} does not export .data. Ignored.`);
       }
     }
 
@@ -79,33 +79,33 @@ function reorderCommand(cmdJson) {
       return { json: c, changed };
     });
 
-    // Logging résumé
+    // Logging summary
     const changedCount = transformed.filter(t => t.changed).length;
-    console.log(`🔧 Réordonnage automatique des options terminé. ${changedCount}/${transformed.length} commandes modifiées si nécessaire.`);
+    console.log(`🔧 Automatic option reordering complete. ${changedCount}/${transformed.length} commands modified if needed.`);
 
-    // Affiche la liste des commandes modifiées (optionnel mais utile)
+    // Show list of modified commands (optional but useful)
     transformed.forEach((t, i) => {
       if (t.changed) {
-        console.log(` - Command index ${i} (${commands[i].name}) : options réordonnées`);
+        console.log(` - Command index ${i} (${commands[i].name}): options reordered`);
       }
     });
 
     // Prépare pour l'envoi
     const rest = new REST({ version: '10' }).setToken(TOKEN);
 
-    console.log(`🚀 Déploiement de ${transformed.length} commandes globales...`);
-    // Si tu veux plutôt déployer en guild (pour test) : Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID)
-    // Ici on déploie globalement :
+  console.log(`🚀 Deploying ${transformed.length} global commands...`);
+  // If you want to deploy to guild (for testing): Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID)
+  // Here we deploy globally:
     const result = await rest.put(
       Routes.applicationCommands(CLIENT_ID),
       { body: transformed.map(t => t.json) }
     );
 
-    console.log('✅ Déploiement terminé.');
+  console.log('✅ Deployment complete.');
     process.exit(0);
   } catch (error) {
-    console.error('❌ Erreur lors du déploiement :', error);
-    // Si l'erreur contient des détails d'API
+    console.error('❌ Error during deployment:', error);
+    // If the error contains API details
     if (error?.rawError) {
       console.error('rawError:', JSON.stringify(error.rawError, null, 2));
     }
