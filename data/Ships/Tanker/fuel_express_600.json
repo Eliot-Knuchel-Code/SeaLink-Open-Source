@@ -1,9 +1,0 @@
-{
-  "model": "Fuel Express 600",
-  "id": "fuel_express_600",
-  "price": 1800,
-  "speed": 13,
-  "reliability": 86,
-  "capacity": 250,
-  "description": "Medium tanker for fuel delivery."
-}

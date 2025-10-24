@@ -1,9 +1,0 @@
-{
-  "model": "Chemical Tanker 800",
-  "id": "chemical_tanker_800",
-  "price": 2200,
-  "speed": 11,
-  "reliability": 90,
-  "capacity": 300,
-  "description": "Specialized tanker for chemical cargo."
-}

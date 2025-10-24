@@ -1,9 +1,0 @@
-{
-  "model": "Sunset Cruise",
-  "id": "sunset_cruise",
-  "price": 3500,
-  "speed": 16,
-  "reliability": 90,
-  "capacity": 180,
-  "description": "Mid-size cruise ship for regional trips."
-}

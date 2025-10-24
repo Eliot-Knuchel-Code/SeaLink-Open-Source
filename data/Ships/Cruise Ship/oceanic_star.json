@@ -1,9 +1,0 @@
-{
-  "model": "Oceanic Star",
-  "id": "oceanic_star",
-  "price": 5000,
-  "speed": 18,
-  "reliability": 92,
-  "capacity": 300,
-  "description": "Luxury cruise ship for long voyages."
-}

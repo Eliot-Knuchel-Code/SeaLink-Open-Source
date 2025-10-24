@@ -1,9 +1,0 @@
-{
-  "model": "Lifeguard 300",
-  "id": "lifeguard_300",
-  "price": 700,
-  "speed": 22,
-  "reliability": 92,
-  "capacity": 10,
-  "description": "Reliable lifeguard boat for coastal rescue."
-}

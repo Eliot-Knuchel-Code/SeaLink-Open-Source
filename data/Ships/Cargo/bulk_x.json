@@ -1,9 +1,0 @@
-{
-  "model": "Bulk Carrier X",
-  "id": "bulk_x",
-  "price": 2000,
-  "speed": 10,
-  "reliability": 85,
-  "capacity": 200,
-  "description": "Cargo lourd — grosses récompenses mais risque modéré."
-}

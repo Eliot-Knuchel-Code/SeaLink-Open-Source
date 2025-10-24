@@ -1,9 +1,0 @@
-{
-  "model": "Rapid Rescue",
-  "id": "rapid_rescue",
-  "price": 900,
-  "speed": 25,
-  "reliability": 95,
-  "capacity": 15,
-  "description": "High-speed rescue boat for emergencies."
-}

@@ -1,9 +1,0 @@
-{
-  "model": "Skiff 200",
-  "id": "skiff_200",
-  "price": 100,
-  "speed": 20,
-  "reliability": 90,
-  "capacity": 10,
-  "description": "Petit bateau rapide, idéal pour missions courtes."
-}

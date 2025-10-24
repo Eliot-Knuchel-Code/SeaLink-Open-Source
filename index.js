@@ -1,222 +1,130 @@
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
-const { Client, Collection, GatewayIntentBits, ActivityType, EmbedBuilder } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, Partials } = require('discord.js');
+const { Sequelize, DataTypes } = require('sequelize');
 
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildVoiceStates,
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildMembers
-    ]
+        GatewayIntentBits.MessageContent
+    ],
+    partials: [Partials.Channel]
 });
 
-// Collections pour les commandes
+// ----------------- SQLite / Sequelize -----------------
+const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: './database/database.sqlite'
+});
+
+// ----------------- Modèles -----------------
+const BotStatus = sequelize.define('BotStatus', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    lastMessageId: { type: DataTypes.STRING },
+    channelId: { type: DataTypes.STRING },
+    status: { type: DataTypes.STRING }
+});
+
+// Sync database
+sequelize.sync();
+
+// ----------------- Collections -----------------
 client.commands = new Collection();
 
-// Récupération des fichiers de commandes
+// ----------------- Charger les commandes -----------------
 const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
-
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    if (command.data && command.execute) {
-        client.commands.set(command.data.name, command);
+fs.readdirSync(commandsPath).forEach(folder => {
+    const folderPath = path.join(commandsPath, folder);
+    if(fs.lstatSync(folderPath).isDirectory()) {
+        const commandFiles = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
+        for (const file of commandFiles) {
+            const filePath = path.join(folderPath, file);
+            const command = require(filePath);
+            if ('data' in command && 'execute' in command) {
+                client.commands.set(command.data.name, command);
+            } else {
+                console.log(`[WARNING] La commande à ${filePath} est invalide`);
+            }
+        }
     }
-}
-
-// Channels log / erreur / DM
-const logChannelId = process.env.LOG_CHANNEL_ID;
-const errorChannelId = process.env.ERROR_CHANNEL_ID;
-const dmLogChannelId = process.env.DM_LOG_CHANNEL_ID;
-
-// Mapping message DM -> utilisateur
-const dmMap = new Map();
-
-// Ready event
-
-client.on('clientReady', () => {
-    console.log(`${client.user.tag} is online!`);
-
-    // Statut rich presence qui change toutes les 30 sec
-    const statuses = [
-        `v${require('./version.json').version} | Marine Traffic`,
-        `v${require('./version.json').version} | /help`,
-        `v${require('./version.json').version} | En mer`
-    ];
-    let i = 0;
-    setInterval(() => {
-        client.user.setActivity(statuses[i], { type: ActivityType.Watching });
-        i = (i + 1) % statuses.length;
-    }, 30000);
-
-    const logChannel = client.channels.cache.get(logChannelId);
-    if (logChannel) logChannel.send('✅ Bot is now online!');
 });
 
-// Event interaction
+// ----------------- Charger les events -----------------
+const eventsPath = path.join(__dirname, 'events');
+fs.readdirSync(eventsPath).forEach(file => {
+    const filePath = path.join(eventsPath, file);
+    const event = require(filePath);
+    if(event.once) {
+        client.once(event.name, (...args) => event.execute(...args, client, sequelize));
+    } else {
+        client.on(event.name, (...args) => event.execute(...args, client, sequelize));
+    }
+});
+
+// ----------------- Interaction -----------------
 client.on('interactionCreate', async interaction => {
-    if (interaction.isAutocomplete()) {
-        const command = client.commands.get(interaction.commandName);
-        if (command && command.autocomplete) {
-            try {
-                await command.autocomplete(interaction);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        return;
-    }
-    if (interaction.isChatInputCommand()) {
-        const command = client.commands.get(interaction.commandName);
-        if (!command) return;
-        try {
-            await command.execute(interaction);
-            // Log de l’utilisation
-            const logChannel = interaction.guild.channels.cache.get(logChannelId);
-            if (logChannel) {
-                logChannel.send(`📝 Command \`/${interaction.commandName}\` used by ${interaction.user.tag}`);
-            }
-        } catch (error) {
-            console.error(error);
-            const errorChannel = interaction.guild.channels.cache.get(errorChannelId);
-            if (errorChannel) errorChannel.send(`⚠️ Error in command \`/${interaction.commandName}\`: ${error.message}`);
-            if (interaction.replied || interaction.deferred) {
-                await interaction.followUp({ content: '❌ An error occurred.', ephemeral: true });
-            } else {
-                await interaction.reply({ content: '❌ An error occurred.', ephemeral: true });
-            }
-        }
-    } else if (interaction.isButton()) {
-        // /eco shop kategori butonları
-        const customId = interaction.customId;
-        if (customId.startsWith('eco_shop_')) {
-            // ...existing code...
-        }
-        // Ports next/prev page buttons
-        if (customId.startsWith('ports_next_') || customId.startsWith('ports_prev_')) {
-            const pageMatch = customId.match(/ports_(?:next|prev)_(\d+)/);
-            const page = pageMatch ? parseInt(pageMatch[1], 10) : 1;
-            // Re-run the ports list command logic with new page
-            const portsCmd = require('./commands/ports.js');
-            // Simulate a new interaction with the correct page
-            // Patch: set the page option in interaction.options
-            if (interaction.options && typeof interaction.options.getInteger === 'function') {
-                interaction.options.getInteger = () => page;
-            } else {
-                interaction.options = { getInteger: () => page, getSubcommand: () => 'list' };
-            }
-            await portsCmd.execute(interaction);
-            return;
-        }
-    }
-});
+    if(!interaction.isChatInputCommand()) return;
 
-// Message de bienvenue
-client.on('guildMemberAdd', async member => {
+    const command = client.commands.get(interaction.commandName);
+    if(!command) return;
+
     try {
-    await member.send(`⚓ Welcome ${member.user.username}! May your maritime adventures be legendary 🌊`);
-    } catch (error) {
-    console.error(`Unable to send welcome message to ${member.user.tag}`);
+        await command.execute(interaction);
+    } catch (err) {
+        console.error(err);
+        await interaction.reply({ content: '❌ Une erreur est survenue lors de l’exécution de la commande', ephemeral: true });
     }
 });
 
-// Gestion des DMs
-client.on('messageCreate', async message => {
-    if (message.author.bot) return;
+// ----------------- Rich Presence dynamique -----------------
+const { ActivityType } = require('discord.js');
 
-    // Si c'est un DM reçu
-    if (message.channel.type === 1) {
-        const logChannel = client.channels.cache.get(dmLogChannelId);
-        if (!logChannel) return;
+client.once('ready', async () => {
+    console.log(`${client.user.tag} est prêt !`);
 
-        const embed = new EmbedBuilder()
-            .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
-            .setDescription(message.content || '*Message vide*')
-            .setColor('Purple')
-            .setFooter({ text: `ID: ${message.author.id}` })
-            .setTimestamp();
+    // Vérifie le statut actuel en base
+    let statusConfig = await BotStatus.findOne();
+    let currentStatus = statusConfig ? statusConfig.status : 'online';
 
-        if (message.attachments.size > 0) {
-            const files = message.attachments.map(att => att.url);
-            embed.addFields({ name: 'Fichiers attachés', value: files.join('\n') });
+    const activities = {
+        online: ['Économie maritime', 'Gestion d’équipage', 'Tracking de bateaux'],
+        update: ['Mise à jour en cours...', 'Patientez…'],
+        offline: ['Bot arrêté', 'Redémarrage imminent']
+    };
+
+    const presenceLoop = async () => {
+        const list = activities[currentStatus] || activities['online'];
+        for (const act of list) {
+            let type = ActivityType.Playing;
+            let statusPresence = 'online';
+
+            if(currentStatus === 'update') {
+                type = ActivityType.Watching;
+                statusPresence = 'idle';
+            } else if(currentStatus === 'offline') {
+                type = ActivityType.Listening;
+                statusPresence = 'dnd';
+            }
+
+            await client.user.setPresence({
+                activities: [{ name: act, type }],
+                status: statusPresence
+            });
+
+            await new Promise(resolve => setTimeout(resolve, 30000)); // 30 sec
         }
+    };
 
-        const sentMessage = await logChannel.send({ embeds: [embed] });
+    const loop = async () => {
+        while(true) await presenceLoop();
+    };
 
-        // Ajouter les réactions
-        await sentMessage.react('✉️'); // répondre en privé
-        await sentMessage.react('📢'); // répondre en public
-        await sentMessage.react('✅'); // marquer comme lu
-
-        // Stocker le mapping message -> utilisateur
-        dmMap.set(sentMessage.id, message.author.id);
-    }
+    loop();
 });
 
-// Réaction sur les embeds DM
-client.on('messageReactionAdd', async (reaction, user) => {
-    if (user.bot) return;
-    if (reaction.message.channel.id !== dmLogChannelId) return;
-
-    const targetUserId = dmMap.get(reaction.message.id);
-    if (!targetUserId) return;
-
-    const emoji = reaction.emoji.name;
-
-    if (emoji === '✉️') {
-        // Répondre en privé
-        const filter = m => m.author.id === user.id;
-    const prompt = await reaction.message.channel.send(`${user}, write your message for <@${targetUserId}> (60 sec)`);
-        const collector = reaction.message.channel.createMessageCollector({ filter, max: 1, time: 60000 });
-
-        collector.on('collect', async m => {
-            try {
-                const targetUser = await client.users.fetch(targetUserId);
-                await targetUser.send(m.content);
-                await reaction.message.channel.send(`✅ Message sent to <@${targetUserId}>`);
-            } catch (err) {
-                console.error(err);
-                await reaction.message.channel.send('❌ Unable to send the message.');
-            } finally {
-                prompt.delete().catch(() => {});
-            }
-        });
-
-        collector.on('end', collected => {
-            if (collected.size === 0) prompt.delete().catch(() => {});
-        });
-    }
-
-    else if (emoji === '📢') {
-        // Répondre en public dans le même salon du log
-        const filter = m => m.author.id === user.id;
-    const prompt = await reaction.message.channel.send(`${user}, write your public message for <@${targetUserId}> (60 sec)`);
-        const collector = reaction.message.channel.createMessageCollector({ filter, max: 1, time: 60000 });
-
-        collector.on('collect', async m => {
-            try {
-                await reaction.message.channel.send(`📢 <@${targetUserId}>, ${m.content}`);
-                await reaction.message.channel.send(`✅ Public message sent to <@${targetUserId}>`);
-            } catch (err) {
-                console.error(err);
-                await reaction.message.channel.send('❌ Unable to send the message.');
-            } finally {
-                prompt.delete().catch(() => {});
-            }
-        });
-
-        collector.on('end', collected => {
-            if (collected.size === 0) prompt.delete().catch(() => {});
-        });
-    }
-
-    else if (emoji === '✅') {
-        // Marquer comme lu
-    reaction.message.channel.send(`✅ Message from <@${targetUserId}> marked as read by ${user}`);
-    }
-});
-
-// Connexion
+// ----------------- Login -----------------
 client.login(process.env.TOKEN);

@@ -1,9 +1,0 @@
-{
-  "model": "Storm Saver",
-  "id": "storm_saver",
-  "price": 1200,
-  "speed": 20,
-  "reliability": 97,
-  "capacity": 18,
-  "description": "Heavy-duty rescue boat for storm conditions."
-}

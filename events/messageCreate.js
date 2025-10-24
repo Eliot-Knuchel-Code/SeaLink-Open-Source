@@ -1,62 +1,64 @@
-const fs = require('fs');
-const path = require('path');
-const AUTO_PATH = path.join(__dirname, '..', 'data', 'automod.json');
-
-if (!fs.existsSync(AUTO_PATH)) fs.writeFileSync(AUTO_PATH, '{}');
-let automodData = JSON.parse(fs.readFileSync(AUTO_PATH, 'utf8'));
+const { AutoModConfig } = require('../database/migrations');
+const logger = require('../utils/logger');
+const { PermissionsBitField } = require('discord.js');
 
 module.exports = {
     name: 'messageCreate',
     async execute(message) {
-        if (message.author.bot) return;
+        if(message.author.bot) return;
 
-        const guildId = message.guild.id;
-        const userId = message.author.id;
+        const config = await AutoModConfig.findByPk(message.guild.id);
+        if(!config) return;
 
-        if (!automodData[guildId]) automodData[guildId] = { config: {}, users: {} };
-        const guildData = automodData[guildId];
-        const config = guildData.config;
-        if (!guildData.users[userId]) guildData.users[userId] = { messages: [], warnings: 0 };
-        const userData = guildData.users[userId];
+        const contentLower = message.content.toLowerCase();
+        const bannedWords = config.bannedWords ? config.bannedWords.split(',') : [];
 
-        // ---------------- Anti-Spam ----------------
-        const now = Date.now();
-        userData.messages.push(now);
-
-        // Filtrer les messages hors intervalle
-        const interval = config.timeLimit || 10000;
-        userData.messages = userData.messages.filter(ts => now - ts <= interval);
-
-        const limit = config.spamLimit || 5;
-        if (userData.messages.length > limit) {
-            userData.warnings += 1;
-            message.reply(`⚠️ Attention ${message.author}, spam détecté ! Avertissement ${userData.warnings}`);
-            userData.messages = []; // Reset compteur
-        }
-
-        // ---------------- Mots interdits ----------------
-        if (config.bannedWords) {
-            const msgLower = message.content.toLowerCase();
-            const foundWord = config.bannedWords.find(word => msgLower.includes(word));
-            if (foundWord) {
-                userData.warnings += 1;
-                await message.delete();
-                message.channel.send(`❌ ${message.author}, tu as utilisé un mot interdit : ${foundWord}. Avertissement ${userData.warnings}`);
+        // ----------------- MOTS INTERDITS -----------------
+        for(const word of bannedWords) {
+            if(contentLower.includes(word.trim())) {
+                await handleAction(message, config);
+                return;
             }
         }
 
-        // ---------------- Kick si trop de warnings ----------------
-        const maxWarnings = config.maxWarnings || 3;
-        if (userData.warnings >= maxWarnings) {
-            const member = message.guild.members.cache.get(userId);
-            if (member.kickable) {
-                await member.kick(`AutoMod: trop d'avertissements (${userData.warnings})`);
-                message.channel.send(`🚨 ${message.author} a été expulsé pour trop d'avertissements !`);
-                delete guildData.users[userId]; // reset warnings
+        // ----------------- LIENS -----------------
+        if(config.bannedLinks) {
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            if(urlRegex.test(message.content)) {
+                await handleAction(message, config);
+                return;
             }
         }
-
-        // ---------------- Save ----------------
-        fs.writeFileSync(AUTO_PATH, JSON.stringify(automodData, null, 2));
     }
 };
+
+async function handleAction(message, config) {
+    const action = config.action || 'mute';
+
+    switch(action) {
+        case 'mute':
+            if(message.member.moderatable) {
+                await message.member.timeout(config.muteDuration * 60000, 'Automod');
+                message.channel.send(`${message.author} a été mute pour ${config.muteDuration} min`);
+                logger.log(`Automod: ${message.author.tag} mute ${config.muteDuration} min`);
+            }
+            break;
+        case 'kick':
+            if(message.member.kickable) {
+                await message.member.kick('Automod');
+                message.channel.send(`${message.author} a été kick`);
+                logger.log(`Automod: ${message.author.tag} kick`);
+            }
+            break;
+        case 'ban':
+            if(message.member.bannable) {
+                await message.member.ban({ reason: 'Automod' });
+                message.channel.send(`${message.author} a été banni`);
+                logger.log(`Automod: ${message.author.tag} ban`);
+            }
+            break;
+    }
+
+    // Supprimer le message fautif
+    await message.delete().catch(() => {});
+}
